@@ -1,0 +1,32 @@
+(require 'semantic/sb)
+
+(require 'highlight-symbol)
+;;(global-set-key [f20] 'highlight-symbol)
+(global-set-key [f8] 'highlight-symbol)
+(global-set-key [f3] 'highlight-symbol-next)
+(global-set-key [f4] 'highlight-symbol-prev)
+;;(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
+
+(global-set-key [f9] 'sr-speedbar-toggle)
+
+(add-to-list 'load-path "~/.emacs.d/custom")
+(require 'sr-speedbar)
+(add-to-list 'load-path "~/.emacs.d/elpa/atuo-complete-1.5.1")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/atuo-complete-1.5.1/dict")
+(ac-config-default)
+
+(add-to-list 'load-path "~/.emacs.d/custom/emacs-clang-complete-async")
+(require 'auto-complete-clang-async)
+(defun ac-cc-mode-setup ()
+  (setq ac-clang-complete-executable "~/.emacs.d/custom/emacs-clang-complete-async/clang-complete")
+  (setq ac-sources '(ac-source-clang-async))
+  (ac-clang-launch-completion-process)
+)
+(defun my-ac-config () 
+  (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+  (add-hook 'auto-complete-mode-hook 'ac-common-setup)
+  (global-auto-complete-mode t))
+(my-ac-config)
+
+(setq-default indent-tabs-mode nil)
